@@ -1,0 +1,46 @@
+<?php
+
+declare(strict_types=1);
+
+namespace NeuralGlitch\OmniaIpsum\Twig;
+
+use NeuralGlitch\OmniaIpsum\Twig\Runtime\AudioRuntime;
+use NeuralGlitch\OmniaIpsum\Twig\Runtime\FakerRuntime;
+use NeuralGlitch\OmniaIpsum\Twig\Runtime\ImageRuntime;
+use NeuralGlitch\OmniaIpsum\Twig\Runtime\TextRuntime;
+use NeuralGlitch\OmniaIpsum\Twig\Runtime\VideoRuntime;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
+
+final class OmniaIpsumExtension extends AbstractExtension
+{
+    /**
+     * @return array<TwigFunction>
+     */
+    public function getFunctions(): array
+    {
+        return [
+            // Image functions
+            new TwigFunction('placeholder_image', [ImageRuntime::class, 'placeholderImage']),
+            new TwigFunction('placeholder_avatar', [ImageRuntime::class, 'placeholderAvatar']),
+
+            // Video functions
+            new TwigFunction('placeholder_video', [VideoRuntime::class, 'placeholderVideo']),
+
+            // Audio functions
+            new TwigFunction('placeholder_audio', [AudioRuntime::class, 'placeholderAudio']),
+
+            // Lorem Ipsum text functions
+            new TwigFunction('lorem_paragraphs', [TextRuntime::class, 'loremParagraphs']),
+            new TwigFunction('lorem_paragraph', [TextRuntime::class, 'loremParagraph']),
+            new TwigFunction('lorem_sentences', [TextRuntime::class, 'loremSentences']),
+            new TwigFunction('lorem_sentence', [TextRuntime::class, 'loremSentence']),
+            new TwigFunction('lorem_words', [TextRuntime::class, 'loremWords']),
+            new TwigFunction('lorem_title', [TextRuntime::class, 'loremTitle']),
+
+            // Faker functions
+            new TwigFunction('fake', [FakerRuntime::class, 'fake']),
+            new TwigFunction('fake_text', [FakerRuntime::class, 'fakeText']),
+        ];
+    }
+}

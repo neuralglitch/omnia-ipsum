@@ -1,0 +1,17 @@
+includes:
+    - phpstan-baseline.neon
+
+parameters:
+    level: max
+    paths:
+        - src
+        - tests
+    
+    # Ignore specific errors if needed
+    ignoreErrors:
+        # Add specific error patterns to ignore here if needed
+    
+    # Enable stricter analysis
+    checkGenericClassInNonGenericObjectType: true
+    reportUnmatchedIgnoredErrors: false
+

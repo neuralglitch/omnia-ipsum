@@ -1,0 +1,9 @@
+{
+    "bundles": {
+        "NeuralGlitch\\OmniaIpsum\\OmniaIpsumBundle": ["dev", "test"]
+    },
+    "copy-from-recipe": {
+        "config/": "%CONFIG_DIR%/"
+    }
+}
+

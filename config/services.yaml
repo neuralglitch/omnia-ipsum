@@ -1,0 +1,57 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+
+  # Register all services
+  NeuralGlitch\OmniaIpsum\:
+    resource: '../src/*'
+    exclude:
+      - '../src/DependencyInjection/'
+      - '../src/OmniaIpsumBundle.php'
+
+  # Image Provider Manager
+  NeuralGlitch\OmniaIpsum\Service\ImageProviderManager:
+    arguments:
+      $config: '%omnia_ipsum.config%'
+
+  # Video Provider Manager
+  NeuralGlitch\OmniaIpsum\Service\VideoProviderManager:
+    arguments:
+      $config: '%omnia_ipsum.config%'
+
+  # Audio Provider Manager
+  NeuralGlitch\OmniaIpsum\Service\AudioProviderManager:
+    arguments:
+      $config: '%omnia_ipsum.config%'
+
+  # Text Generator
+  NeuralGlitch\OmniaIpsum\Service\TextGenerator:
+    arguments:
+      $config: '%omnia_ipsum.config%'
+
+  # Faker Factory
+  NeuralGlitch\OmniaIpsum\Service\FakerFactory:
+    arguments:
+      $config: '%omnia_ipsum.config%'
+
+  # Twig Extension
+  NeuralGlitch\OmniaIpsum\Twig\OmniaIpsumExtension:
+    tags: ['twig.extension']
+
+  # Twig Runtimes
+  NeuralGlitch\OmniaIpsum\Twig\Runtime\ImageRuntime:
+    tags: ['twig.runtime']
+
+  NeuralGlitch\OmniaIpsum\Twig\Runtime\VideoRuntime:
+    tags: ['twig.runtime']
+
+  NeuralGlitch\OmniaIpsum\Twig\Runtime\AudioRuntime:
+    tags: ['twig.runtime']
+
+  NeuralGlitch\OmniaIpsum\Twig\Runtime\TextRuntime:
+    tags: ['twig.runtime']
+
+  NeuralGlitch\OmniaIpsum\Twig\Runtime\FakerRuntime:
+    tags: ['twig.runtime']
+
