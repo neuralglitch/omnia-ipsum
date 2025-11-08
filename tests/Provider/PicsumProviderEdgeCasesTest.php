@@ -80,4 +80,3 @@ final class PicsumProviderEdgeCasesTest extends TestCase
         $this->assertFalse($this->provider->supportsOption(''));
     }
 }
-

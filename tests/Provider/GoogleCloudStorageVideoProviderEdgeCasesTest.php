@@ -85,10 +85,9 @@ final class GoogleCloudStorageVideoProviderEdgeCasesTest extends TestCase
     {
         foreach (GoogleCloudStorageVideoProvider::getAvailableVideos() as $video) {
             $url = $this->provider->generate(1920, 1080, ['video' => $video]);
-            
+
             $this->assertStringContainsString('commondatastorage.googleapis.com', $url);
             $this->assertStringContainsString('.mp4', $url);
         }
     }
 }
-
