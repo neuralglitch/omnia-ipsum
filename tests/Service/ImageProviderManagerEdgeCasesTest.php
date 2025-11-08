@@ -106,7 +106,7 @@ final class ImageProviderManagerEdgeCasesTest extends TestCase
 
         $this->assertIsArray($providers);
         $this->assertGreaterThan(0, \count($providers));
-        
+
         foreach ($providers as $name => $provider) {
             $this->assertIsString($name);
             $this->assertInstanceOf(ImageProviderInterface::class, $provider);
@@ -128,4 +128,3 @@ final class ImageProviderManagerEdgeCasesTest extends TestCase
         $this->assertIsString($url);
     }
 }
-
