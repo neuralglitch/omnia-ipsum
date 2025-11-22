@@ -24,9 +24,9 @@ final class AudioRuntimeTest extends TestCase
         $this->runtime = new AudioRuntime($audioManager);
     }
 
-    public function testPlaceholderAudio(): void
+    public function testOmniaAudio(): void
     {
-        $url = $this->runtime->placeholderAudio(10);
+        $url = $this->runtime->omniaAudio(10);
 
         $this->assertIsString($url);
         $this->assertStringStartsWith('data:audio/wav;base64,', $url);

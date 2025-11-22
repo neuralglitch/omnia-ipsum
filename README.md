@@ -23,13 +23,18 @@
 
 ## Features
 
-- **Placeholder Images** - 5 providers (Picsum, Placeholder.com, DummyImage, Placehold.co, UI Avatars)
-- **Avatar Generation** - UI Avatars with automatic initials and colors
-- **Placeholder Videos** - Google Cloud Storage with 13 professional videos
-- **Placeholder Audio** - Silent WAV generation (data URLs)
-- **Lorem Ipsum Text** - Paragraphs, sentences, words, titles
-- **Fake Data** - FakerPHP integration for realistic data (with `fake_text()` for realistic content)
-- **Twig Functions** - Simple, intuitive template functions (Runtime-based architecture)
+- **Placeholder Images** - 5 providers with real photos and colored placeholders
+- **Avatar Generation** - Automatic initials and colors
+- **Placeholder Videos** - Professional video clips
+- **Placeholder Audio** - Music tracks and silent audio
+- **Lorem Ipsum Text** - Classic placeholder text generation
+- **Fake Data** - FakerPHP integration for realistic content
+- **Twig Functions** - Simple, intuitive template functions
+
+## Prerequisites
+
+For fully automatic setup, visit the [related Flex recipe repository](https://github.com/neuralglitch/symfony-recipes) and follow the instructions to add it to the 
+composer.json in the consuming project, as the recipe is not yet part of the Symfony's main recipe repository.
 
 ## Installation
 
@@ -39,19 +44,16 @@ composer require neuralglitch/omnia-ipsum
 
 ## Quick Start
 
-### 1. Use in templates
-
 ```twig
 {# Images #}
-<img src="{{ placeholder_image(600, 400) }}" alt="Placeholder">
-<img src="{{ placeholder_image(800, 600, {provider: 'picsum'}) }}" alt="Photo">
-<img src="{{ placeholder_avatar('John Doe', 100) }}" alt="Avatar">
+<img src="{{ omnia_image(600, 400) }}" alt="Placeholder">
+<img src="{{ omnia_avatar('John Doe', 100) }}" alt="Avatar">
 
 {# Videos #}
-<video src="{{ placeholder_video(1920, 1080, {video: 'sintel'}) }}" controls></video>
+<video src="{{ omnia_video(1920, 1080) }}" controls></video>
 
 {# Audio #}
-<audio src="{{ placeholder_audio(10) }}" controls></audio>
+<audio src="{{ omnia_audio(10) }}" controls></audio>
 
 {# Text #}
 <h1>{{ lorem_title() }}</h1>
@@ -59,38 +61,20 @@ composer require neuralglitch/omnia-ipsum
 
 {# Fake Data #}
 <p>{{ fake('name') }} - {{ fake('email') }}</p>
-<p>{{ fake_text(200) }}</p> {# Realistic text instead of Lorem Ipsum #}
+<p>{{ fake_text(200) }}</p>
 ```
 
-### 2. Configure (optional)
-
-```yaml
-# config/packages/omnia_ipsum.yaml
-omnia_ipsum:
-    images:
-        default_provider: 'picsum'
-    faker:
-        locale: 'de_DE'
-```
-
-### 3. Disable in production
-
-```php
-// config/bundles.php
-return [
-    // ...
-    NeuralGlitch\OmniaIpsum\OmniaIpsumBundle::class => ['dev' => true, 'test' => true],
-];
-```
+**Important:** Disable in production by configuring the bundle only for `dev` and `test` environments.
 
 ## Documentation
 
 - **[Quick Reference](docs/quickstart.md)** - Get started in 5 minutes
-- **[Image Providers](docs/images.md)** - 5 providers including Picsum, Placeholder.com, UI Avatars
-- **[Video Providers](docs/videos.md)** - Google Cloud Storage (13 videos)
-- **[Audio Providers](docs/audios.md)** - Silent audio generation
-- **[Text Generation](docs/text.md)** - Lorem Ipsum + Faker realistic text
-- **[Configuration](docs/configuration.md)** - All configuration options
+- **[Image Providers](docs/images.md)** - All image providers and options
+- **[Video Providers](docs/videos.md)** - Video options and clips
+- **[Audio Providers](docs/audios.md)** - Audio providers and tracks
+- **[Text Generation](docs/text.md)** - Lorem Ipsum and Faker integration
+- **[Faker Integration](docs/faker.md)** - All available fake data formatters
+- **[Configuration](docs/configuration.md)** - Configuration options
 
 ## Requirements
 

@@ -68,7 +68,8 @@ final class AudioProviderManagerTest extends TestCase
 
         $this->assertIsArray($providers);
         $this->assertArrayHasKey('silence', $providers);
-        $this->assertCount(1, $providers);
+        $this->assertArrayHasKey('soundhelix', $providers);
+        $this->assertCount(2, $providers);
     }
 
     public function testGenerateUsesDefaultProvider(): void

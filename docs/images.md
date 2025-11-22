@@ -12,9 +12,55 @@ Complete reference for all available placeholder image providers.
 | `placehold` | ❌ | ✅ | ✅ | PNG, JPG, GIF, WebP | Modern API, WebP support |
 | `ui-avatars` | ❌ | ✅ | ✅ | PNG, SVG | **Avatars with initials**, rounded, bold |
 
-## Placeholder.com (Default)
+## Picsum Photos (Default)
+
+**URL Pattern:** `https://picsum.photos/{width}/{height}?grayscale&blur={level}&random={seed}`
+
+Random photos with special effects. Best for realistic layouts and mockups.
+
+### Supported Options
+
+- `grayscale` - Convert to grayscale (boolean)
+- `blur` - Blur level (1-10)
+- `seed` - Seed for consistent random image (integer)
+
+### Examples
+
+```twig
+{# Random photo (default) #}
+{{ omnia_image(800, 600) }}
+
+{# Grayscale #}
+{{ omnia_image(800, 600, {grayscale: true}) }}
+
+{# Blurred #}
+{{ omnia_image(1920, 1080, {blur: 5}) }}
+
+{# Consistent image with seed (great for loops!) #}
+{% for i in 1..12 %}
+    <img src="{{ omnia_image(300, 300, {seed: i}) }}" alt="Product {{ i }}">
+{% endfor %}
+
+{# Same seed = same image (reproducible) #}
+{{ omnia_image(600, 400, {seed: 42}) }}
+```
+
+### Best For
+
+- Hero images
+- Background images
+- Gallery mockups
+- Realistic prototypes
+- Product images
+- Blog post headers
+
+**💡 Pro Tip:** Use `seed` parameter in loops to get different images!
+
+## Placeholder.com
 
 **URL Pattern:** `https://via.placeholder.com/{width}x{height}/{bg}/{fg}?text={text}`
+
+Classic placeholder service with colored boxes and text.
 
 ### Supported Options
 
@@ -26,23 +72,34 @@ Complete reference for all available placeholder image providers.
 
 ```twig
 {# Basic #}
-{{ placeholder_image(600, 400) }}
+{{ omnia_image(600, 400, {provider: 'placeholder'}) }}
 
 {# Custom colors #}
-{{ placeholder_image(600, 400, {
+{{ omnia_image(600, 400, {
+    provider: 'placeholder',
     background: 'ff6b6b',
     foreground: 'ffffff'
 }) }}
 
 {# With text #}
-{{ placeholder_image(800, 600, {
+{{ omnia_image(800, 600, {
+    provider: 'placeholder',
     text: 'Product Image'
 }) }}
 ```
 
+### Best For
+
+- Quick wireframes
+- Layout testing
+- Color scheme testing
+- Simple mockups
+
 ## DummyImage.com
 
 **URL Pattern:** `https://dummyimage.com/{width}x{height}/{bg}/{fg}.{format}&text={text}`
+
+Versatile provider with multiple format support.
 
 ### Supported Options
 
@@ -55,100 +112,39 @@ Complete reference for all available placeholder image providers.
 
 ```twig
 {# JPEG format #}
-{{ placeholder_image(800, 600, {
+{{ omnia_image(800, 600, {
     provider: 'dummyimage',
     format: 'jpg'
 }) }}
 
 {# Custom everything #}
-{{ placeholder_image(1200, 800, {
+{{ omnia_image(1200, 800, {
     provider: 'dummyimage',
     background: '007bff',
     foreground: 'ffffff',
     text: 'Hero Image',
     format: 'png'
 }) }}
-```
 
-## Picsum Photos (Lorem Picsum)
-
-**URL Pattern:** `https://picsum.photos/{width}/{height}?grayscale&blur={level}`
-
-Random photos with special effects. Good for general use.
-
-### Supported Options
-
-- `grayscale` - Convert to grayscale (boolean)
-- `blur` - Blur level (1-10)
-- `seed` - Seed for consistent random image (integer)
-
-### Examples
-
-```twig
-{# Random photo #}
-{{ placeholder_image(800, 600, {provider: 'picsum'}) }}
-
-{# Grayscale #}
-{{ placeholder_image(800, 600, {
-    provider: 'picsum',
-    grayscale: true
-}) }}
-
-{# Blurred #}
-{{ placeholder_image(1920, 1080, {
-    provider: 'picsum',
-    blur: 5
-}) }}
-
-{# Consistent image (same seed = same image) #}
-{{ placeholder_image(600, 400, {
-    provider: 'picsum',
-    seed: 42
+{# GIF format #}
+{{ omnia_image(400, 300, {
+    provider: 'dummyimage',
+    format: 'gif'
 }) }}
 ```
 
 ### Best For
 
-- Hero images
-- Background images
-- Gallery mockups
-- Realistic prototypes
-
-## PlaceKitten
-
-**URL Pattern:** `https://placekitten.com/{width}/{height}` or `https://placekitten.com/g/{width}/{height}`
-
-Cute kitten photos. Great for fun projects or pet-related sites.
-
-### Supported Options
-
-- `grayscale` - Convert to grayscale (boolean)
-
-### Examples
-
-```twig
-{# Random kitten #}
-{{ placeholder_image(400, 300, {provider: 'placekitten'}) }}
-
-{# Grayscale kitten #}
-{{ placeholder_image(400, 300, {
-    provider: 'placekitten',
-    grayscale: true
-}) }}
-```
-
-### Best For
-
-- Pet websites
-- Fun prototypes
-- Children's apps
-- Playful designs
+- Testing different image formats
+- Image optimization testing
+- Specific format requirements
+- Fine control over appearance
 
 ## Placehold.co
 
 **URL Pattern:** `https://placehold.co/{width}x{height}/{bg}/{fg}.{format}?text={text}`
 
-Modern placeholder service with clean design.
+Modern placeholder service with clean design and WebP support.
 
 ### Supported Options
 
@@ -161,47 +157,36 @@ Modern placeholder service with clean design.
 
 ```twig
 {# Basic #}
-{{ placeholder_image(600, 400, {provider: 'placehold'}) }}
+{{ omnia_image(600, 400, {provider: 'placehold'}) }}
 
-{# WebP format #}
-{{ placeholder_image(800, 600, {
+{# WebP format (modern, efficient) #}
+{{ omnia_image(800, 600, {
     provider: 'placehold',
+    format: 'webp'
+}) }}
+
+{# Custom colors and text #}
+{{ omnia_image(1200, 600, {
+    provider: 'placehold',
+    background: '6c757d',
+    foreground: 'ffffff',
+    text: 'Banner Ad',
     format: 'webp'
 }) }}
 ```
 
-## Placeholders.dev
+### Best For
 
-**URL Pattern:** `https://placeholders.dev/{width}x{height}/{bg}/{fg}?text={text}`
-
-Simple and fast placeholder service.
-
-### Supported Options
-
-- `background` - Background color (hex, no #)
-- `foreground` - Text color (hex, no #)
-- `text` - Custom text
-
-### Examples
-
-```twig
-{# Basic #}
-{{ placeholder_image(600, 400, {provider: 'placeholders'}) }}
-
-{# Custom #}
-{{ placeholder_image(800, 600, {
-    provider: 'placeholders',
-    background: '28a745',
-    foreground: 'ffffff',
-    text: 'Success!'
-}) }}
-```
+- Modern web projects (WebP support)
+- Performance optimization testing
+- Clean, minimal designs
+- Next-gen image formats
 
 ## UI Avatars (Avatar Generation)
 
 **URL Pattern:** `https://ui-avatars.com/api/?name={name}&size={size}`
 
-Specialized service for generating avatar images with initials and colors.
+Specialized service for generating avatar images with initials and colors. **Use `omnia_avatar()` function for convenience!**
 
 ### Supported Options
 
@@ -214,20 +199,27 @@ Specialized service for generating avatar images with initials and colors.
 ### Examples
 
 ```twig
-{# Basic avatar with automatic initials #}
-<img src="{{ placeholder_avatar('John Doe', 100) }}" alt="John Doe" class="rounded-circle">
+{# Using the convenience function #}
+<img src="{{ omnia_avatar('John Doe', 100) }}" alt="John Doe" class="rounded-circle">
 
 {# With custom colors #}
-<img src="{{ placeholder_avatar('Jane Smith', 80, {
+<img src="{{ omnia_avatar('Jane Smith', 80, {
     background: '007bff',
     foreground: 'ffffff'
 }) }}" alt="Jane Smith">
 
 {# Bold and rounded #}
-<img src="{{ placeholder_avatar('Bob Wilson', 120, {
+<img src="{{ omnia_avatar('Bob Wilson', 120, {
     bold: true,
     rounded: true
 }) }}" alt="Bob Wilson">
+
+{# Team list example #}
+{% for member in team %}
+    <img src="{{ omnia_avatar(fake('name'), 60) }}" 
+         alt="{{ member }}" 
+         class="rounded-circle">
+{% endfor %}
 ```
 
 ### Features
@@ -245,38 +237,55 @@ Specialized service for generating avatar images with initials and colors.
 - Comment sections
 - Contact lists
 - Author bylines
+- Chat interfaces
 
 ## Choosing the Right Provider
 
+### Use `picsum` (default) when:
+- ✅ You want realistic photos
+- ✅ You're building a gallery
+- ✅ You need hero images
+- ✅ You want to impress clients
+- ✅ Need blur or grayscale effects
+- ✅ Need different images in loops (use `seed`)
+
 ### Use `ui-avatars` when:
-- Generating user avatars
-- Need initials displayed
-- Want consistent colors per name
-- Building team/profile pages
+- ✅ Generating user avatars
+- ✅ Need initials displayed
+- ✅ Want consistent colors per name
+- ✅ Building team/profile pages
+- ✅ Chat/messaging interfaces
 
-### Use `picsum` when:
-- You want realistic photos
-- You're building a gallery
-- You need hero images
-- You want to impress clients
-- Need blur or grayscale effects
-
-### Use `placeholder` (default) when:
-- You need simple colored boxes
-- You want fast loading
-- You need custom text
-- You're prototyping layouts
+### Use `placeholder` when:
+- ✅ You need simple colored boxes
+- ✅ You want fast loading
+- ✅ You need custom text
+- ✅ You're prototyping layouts
+- ✅ Testing color schemes
 
 ### Use `dummyimage` when:
-- You need specific image formats
-- You want fine control over colors
-- You need consistent styling
-- You're testing image optimization
+- ✅ You need specific image formats
+- ✅ You want fine control over colors
+- ✅ You need consistent styling
+- ✅ You're testing image optimization
 
 ### Use `placehold` when:
-- You want WebP format
-- You need modern placeholder API
-- You want colored boxes with text
+- ✅ You want WebP format
+- ✅ You need modern placeholder API
+- ✅ You want colored boxes with text
+- ✅ Testing next-gen formats
+
+## Performance Comparison
+
+| Provider | Avg Load Time | CDN | Rate Limits |
+|----------|---------------|-----|-------------|
+| `picsum` | ~150ms | ✅ | None |
+| `placeholder` | ~100ms | ✅ | None |
+| `dummyimage` | ~120ms | ✅ | None |
+| `placehold` | ~130ms | ✅ | None |
+| `ui-avatars` | ~90ms | ✅ | None |
+
+*All providers use CDN for fast global delivery.*
 
 ## Custom Provider
 
@@ -322,24 +331,12 @@ services:
 Use in templates:
 
 ```twig
-{{ placeholder_image(800, 600, {provider: 'custom'}) }}
+{{ omnia_image(800, 600, {provider: 'custom'}) }}
 ```
-
-## Provider Performance
-
-| Provider | Avg. Load Time | CDN | Rate Limit |
-|----------|----------------|-----|------------|
-| `placeholder` | ~100ms | ✅ | None |
-| `dummyimage` | ~120ms | ✅ | None |
-| `picsum` | ~200ms | ✅ | None |
-| `placekitten` | ~180ms | ✅ | None |
-| `placehold` | ~110ms | ✅ | None |
-| `placeholders` | ~100ms | ✅ | None |
-
-*Times measured from Europe, may vary by region*
 
 ## See Also
 
-- [Usage Guide](usage.md) - How to use images in templates
+- [Quick Reference](quickstart.md) - Quick examples
 - [Configuration](configuration.md) - Set default provider
-
+- [Picsum Photos](https://picsum.photos/) - Official Picsum website
+- [UI Avatars](https://ui-avatars.com/) - Official UI Avatars website

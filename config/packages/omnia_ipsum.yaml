@@ -17,7 +17,7 @@ omnia_ipsum:
 
     # Audio settings
     audios:
-        default_provider: 'silence'      # Available: silence
+        default_provider: 'soundhelix'   # Available: soundhelix (music), silence (silent)
         default_duration: 10             # Default duration in seconds (1-60)
 
     # Lorem Ipsum text settings

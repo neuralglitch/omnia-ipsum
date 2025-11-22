@@ -19,7 +19,7 @@ final class AudioRuntime implements RuntimeExtensionInterface
      *
      * @param array<string, mixed> $options
      */
-    public function placeholderAudio(int $duration, array $options = []): string
+    public function omniaAudio(int $duration, array $options = []): string
     {
         return $this->audioProviderManager->generate($duration, $options);
     }

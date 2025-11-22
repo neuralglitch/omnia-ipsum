@@ -349,7 +349,7 @@ omnia_ipsum:
 ```twig
 {# ✅ Good: Text matches image #}
 <div class="media">
-    <img src="{{ placeholder_image(400, 300, {provider: 'picsum'}) }}">
+    <img src="{{ omnia_image(400, 300, {provider: 'picsum'}) }}">
     <h3>{{ lorem_title() }}</h3>
     <p>{{ lorem_sentence() }}</p>
 </div>

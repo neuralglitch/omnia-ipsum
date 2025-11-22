@@ -30,10 +30,10 @@ final class OmniaIpsumExtensionTest extends TestCase
         $functions = $this->extension->getFunctions();
         $names = array_map(fn ($f) => $f->getName(), $functions);
 
-        $this->assertContains('placeholder_image', $names);
-        $this->assertContains('placeholder_avatar', $names);
-        $this->assertContains('placeholder_video', $names);
-        $this->assertContains('placeholder_audio', $names);
+        $this->assertContains('omnia_image', $names);
+        $this->assertContains('omnia_avatar', $names);
+        $this->assertContains('omnia_video', $names);
+        $this->assertContains('omnia_audio', $names);
         $this->assertContains('lorem_paragraphs', $names);
         $this->assertContains('lorem_paragraph', $names);
         $this->assertContains('lorem_sentences', $names);

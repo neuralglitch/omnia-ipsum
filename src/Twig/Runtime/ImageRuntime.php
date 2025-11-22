@@ -19,7 +19,7 @@ final class ImageRuntime implements RuntimeExtensionInterface
      *
      * @param array<string, mixed> $options
      */
-    public function placeholderImage(int $width, int $height, array $options = []): string
+    public function omniaImage(int $width, int $height, array $options = []): string
     {
         return $this->imageProviderManager->generate($width, $height, $options);
     }
@@ -29,7 +29,7 @@ final class ImageRuntime implements RuntimeExtensionInterface
      *
      * @param array<string, mixed> $options
      */
-    public function placeholderAvatar(string $name, int $size = 100, array $options = []): string
+    public function omniaAvatar(string $name, int $size = 100, array $options = []): string
     {
         return $this->imageProviderManager->generateAvatar($name, $size, $options);
     }
