@@ -6,6 +6,7 @@ namespace NeuralGlitch\OmniaIpsum\Service;
 
 use NeuralGlitch\OmniaIpsum\Provider\AudioProviderInterface;
 use NeuralGlitch\OmniaIpsum\Provider\SilenceAudioProvider;
+use NeuralGlitch\OmniaIpsum\Provider\SoundHelixProvider;
 
 final class AudioProviderManager
 {
@@ -78,5 +79,6 @@ final class AudioProviderManager
     private function registerDefaultProviders(): void
     {
         $this->registerProvider(new SilenceAudioProvider());
+        $this->registerProvider(new SoundHelixProvider());
     }
 }

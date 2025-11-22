@@ -126,7 +126,7 @@ final class ServiceName
 - **Classes/Interfaces**: `PascalCase`
 - **Methods/Properties**: `camelCase`
 - **Constants**: `UPPER_SNAKE_CASE`
-- **Twig functions**: `snake_case` (e.g., `placeholder_image`)
+- **Twig functions**: `snake_case` (e.g., `omnia_image`)
 - **File names**: Match class name
 
 ### Configuration
@@ -371,7 +371,7 @@ Add section to `docs/providers.md`:
 ### Examples
 
 \`\`\`twig
-{{ placeholder_image(600, 400, {provider: 'newprovider'}) }}
+{{ omnia_image(600, 400, {provider: 'newprovider'}) }}
 \`\`\`
 ```
 

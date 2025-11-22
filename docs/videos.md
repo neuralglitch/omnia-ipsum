@@ -31,35 +31,35 @@ The Google Cloud Storage provider offers 13 professional, high-quality videos fr
 
 ```twig
 {# Default video (Big Buck Bunny) #}
-<video src="{{ placeholder_video(1920, 1080) }}" controls></video>
+<video src="{{ omnia_video(1920, 1080) }}" controls></video>
 
 {# Specific video #}
-<video src="{{ placeholder_video(1920, 1080, {video: 'sintel'}) }}" controls></video>
+<video src="{{ omnia_video(1920, 1080, {video: 'sintel'}) }}" controls></video>
 ```
 
 ### All Videos Examples
 
 ```twig
 {# Animation Videos #}
-<video src="{{ placeholder_video(1920, 1080, {video: 'big-buck-bunny'}) }}" controls></video>
-<video src="{{ placeholder_video(1920, 1080, {video: 'sintel'}) }}" controls></video>
-<video src="{{ placeholder_video(1920, 1080, {video: 'elephants-dream'}) }}" controls></video>
-<video src="{{ placeholder_video(1920, 1080, {video: 'tears-of-steel'}) }}" controls></video>
+<video src="{{ omnia_video(1920, 1080, {video: 'big-buck-bunny'}) }}" controls></video>
+<video src="{{ omnia_video(1920, 1080, {video: 'sintel'}) }}" controls></video>
+<video src="{{ omnia_video(1920, 1080, {video: 'elephants-dream'}) }}" controls></video>
+<video src="{{ omnia_video(1920, 1080, {video: 'tears-of-steel'}) }}" controls></video>
 
 {# Google Demo Videos #}
-<video src="{{ placeholder_video(1920, 1080, {video: 'for-bigger-blazes'}) }}" controls></video>
-<video src="{{ placeholder_video(1920, 1080, {video: 'for-bigger-escapes'}) }}" controls></video>
-<video src="{{ placeholder_video(1920, 1080, {video: 'for-bigger-fun'}) }}" controls></video>
-<video src="{{ placeholder_video(1920, 1080, {video: 'for-bigger-joyrides'}) }}" controls></video>
-<video src="{{ placeholder_video(1920, 1080, {video: 'for-bigger-meltdowns'}) }}" controls></video>
+<video src="{{ omnia_video(1920, 1080, {video: 'for-bigger-blazes'}) }}" controls></video>
+<video src="{{ omnia_video(1920, 1080, {video: 'for-bigger-escapes'}) }}" controls></video>
+<video src="{{ omnia_video(1920, 1080, {video: 'for-bigger-fun'}) }}" controls></video>
+<video src="{{ omnia_video(1920, 1080, {video: 'for-bigger-joyrides'}) }}" controls></video>
+<video src="{{ omnia_video(1920, 1080, {video: 'for-bigger-meltdowns'}) }}" controls></video>
 
 {# Car Videos #}
-<video src="{{ placeholder_video(1920, 1080, {video: 'subaru-outback'}) }}" controls></video>
-<video src="{{ placeholder_video(1920, 1080, {video: 'vw-gti-review'}) }}" controls></video>
+<video src="{{ omnia_video(1920, 1080, {video: 'subaru-outback'}) }}" controls></video>
+<video src="{{ omnia_video(1920, 1080, {video: 'vw-gti-review'}) }}" controls></video>
 
 {# Other Videos #}
-<video src="{{ placeholder_video(1920, 1080, {video: 'we-are-going-on-bullrun'}) }}" controls></video>
-<video src="{{ placeholder_video(1920, 1080, {video: 'what-car-can-you-get'}) }}" controls></video>
+<video src="{{ omnia_video(1920, 1080, {video: 'we-are-going-on-bullrun'}) }}" controls></video>
+<video src="{{ omnia_video(1920, 1080, {video: 'what-car-can-you-get'}) }}" controls></video>
 ```
 
 ### Supported Options
@@ -75,7 +75,7 @@ The Google Cloud Storage provider offers 13 professional, high-quality videos fr
 <div class="video-gallery">
     {# Hero Video with Big Buck Bunny #}
     <video 
-        src="{{ placeholder_video(1920, 1080) }}" 
+        src="{{ omnia_video(1920, 1080) }}" 
         controls 
         autoplay 
         muted 
@@ -89,7 +89,7 @@ The Google Cloud Storage provider offers 13 professional, high-quality videos fr
         {% for video in videos %}
             <div class="col-md-4">
                 <video 
-                    src="{{ placeholder_video(1920, 1080, {video: video}) }}" 
+                    src="{{ omnia_video(1920, 1080, {video: video}) }}" 
                     controls
                     preload="metadata"
                     class="feature-video"
@@ -101,7 +101,7 @@ The Google Cloud Storage provider offers 13 professional, high-quality videos fr
     {# Product Demo Videos #}
     {% for video in ['for-bigger-fun', 'for-bigger-joyrides', 'for-bigger-meltdowns'] %}
         <video 
-            src="{{ placeholder_video(1920, 1080, {video: video}) }}" 
+            src="{{ omnia_video(1920, 1080, {video: video}) }}" 
             controls
             class="product-video"
         ></video>
@@ -188,36 +188,10 @@ omnia_ipsum:
 
 ```twig
 {# Uses default provider (gcs) #}
-<video src="{{ placeholder_video(1920, 1080) }}" controls></video>
+<video src="{{ omnia_video(1920, 1080) }}" controls></video>
 
 {# Explicit provider (same as default) #}
-<video src="{{ placeholder_video(1920, 1080, {provider: 'gcs'}) }}" controls></video>
-```
-
-## Programmatic Access
-
-### Get Available Videos
-
-```php
-use NeuralGlitch\OmniaIpsum\Provider\GoogleCloudStorageVideoProvider;
-
-// Get all available video names
-$videos = GoogleCloudStorageVideoProvider::getAvailableVideos();
-// Returns: ['big-buck-bunny', 'sintel', 'elephants-dream', ...]
-```
-
-### Generate URLs
-
-```php
-use NeuralGlitch\OmniaIpsum\Service\VideoProviderManager;
-
-$manager = $container->get(VideoProviderManager::class);
-
-// Default video
-$url = $manager->generate(1920, 1080);
-
-// Specific video
-$url = $manager->generate(1920, 1080, ['video' => 'sintel']);
+<video src="{{ omnia_video(1920, 1080, {provider: 'gcs'}) }}" controls></video>
 ```
 
 ## Performance
@@ -240,8 +214,8 @@ All videos are high quality and relatively large:
 
 ```twig
 <video 
-    src="{{ placeholder_video(1920, 1080, {video: 'sintel'}) }}"
-    poster="{{ placeholder_image(1920, 1080, {provider: 'picsum'}) }}"
+    src="{{ omnia_video(1920, 1080, {video: 'sintel'}) }}"
+    poster="{{ omnia_image(1920, 1080, {provider: 'picsum'}) }}"
     preload="metadata"
     controls
     class="optimized-video"

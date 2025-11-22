@@ -30,3 +30,6 @@ build/
 /phpunit.xml
 /phpstan.neon
 
+
+# Symfony Flex Recipes
+.recipe/

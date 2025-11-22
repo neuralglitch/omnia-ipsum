@@ -5,66 +5,29 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [0.1.0] - 2025-11-08
 
 ### Added
-- **UI Avatars provider** - Professional avatar generation with initials
-- UI Avatars bold and rounded options
 
-### Changed
-- Switched avatar generation from Placeholder.com to UI Avatars (more reliable)
-- Avatar generation now uses full names instead of just initials
-
-### Removed
-- **PlaceKitten provider** (service offline)
-- **Placeholders.dev provider** (service offline)
-- **Unsplash Source provider** (API deprecated by Unsplash)
-
-## [0.1.0] - 2024-11-07
-
-### Added
-- Initial release
-- Placeholder image generation with multiple providers:
-  - Placeholder.com (default)
-  - DummyImage.com
-  - Picsum Photos (real photos)
-  - PlaceKitten (cute kittens)
-  - Placehold.co
-  - Placeholders.dev
-- Placeholder video generation:
-  - LoremIpsum.video provider
-  - 12 pre-built source ID clips (PowerPoint, Keynote, VT)
-  - Custom video generation with duration, FPS, name, background
-- Placeholder audio generation:
-  - Silence provider (data URLs)
-  - Custom sample rate and channels
-  - WAV format (base64-encoded)
-- Avatar generation with initials
-- Lorem Ipsum text generation:
-  - Paragraphs
-  - Sentences
-  - Words
-  - Titles
-- Faker integration for realistic fake data
-- Twig functions for easy template usage
-- Comprehensive configuration options
-- PHPStan Level 9 compliance
-- >85% test coverage (156 tests, 555 assertions)
-- Complete documentation
-
-### Features
-- `placeholder_image()` - Generate placeholder images
-- `placeholder_avatar()` - Generate avatars with initials
-- `placeholder_video()` - Generate placeholder videos
-- `placeholder_audio()` - Generate silent audio
-- `lorem_paragraphs()` - Generate Lorem Ipsum paragraphs
-- `lorem_paragraph()` - Generate single paragraph
-- `lorem_sentences()` - Generate sentences
-- `lorem_sentence()` - Generate single sentence
-- `lorem_words()` - Generate words
-- `lorem_title()` - Generate title
-- `fake()` - Generate fake data using Faker
-
-[Unreleased]: https://github.com/neuralglitch/omnia-ipsum/compare/v0.1.0...HEAD
-[0.1.0]: https://github.com/neuralglitch/omnia-ipsum/releases/tag/v0.1.0
+- Initial release of Omnia Ipsum Bundle for Symfony
+- Twig functions for easy placeholder integration in templates
+- Image providers (5 total): Picsum Photos (default), Placeholder.com, DummyImage, Placehold.co, UI Avatars
+- Video provider: Google Cloud Storage with 13 professional videos (Big Buck Bunny, Sintel, Elephants Dream, etc.)
+- Audio providers (2 total): SoundHelix generated music (default), Silence for testing
+- Lorem Ipsum text generation (paragraphs, sentences, words, titles)
+- Faker integration with 100+ formatters for realistic fake data
+- `fake_text()` function for realistic content (alternative to Lorem Ipsum)
+- Configuration system for all providers and generators
+- 12 Twig functions:
+  - `omnia_image()`, `omnia_avatar()`
+  - `omnia_video()`
+  - `omnia_audio()`
+  - `lorem_paragraphs()`, `lorem_paragraph()`, `lorem_sentences()`, `lorem_sentence()`, `lorem_words()`, `lorem_title()`
+  - `fake()`, `fake_text()`
+- Picsum `seed` parameter for different images in loops
+- SoundHelix music tracks (10 songs, ~5 minutes each)
+- UI Avatars with automatic initials and color generation
+- Symfony 6.4, 7.x, and 8.x compatibility
+- Documentation with detailed guides for all features
+- Demo application showcasing all features
 

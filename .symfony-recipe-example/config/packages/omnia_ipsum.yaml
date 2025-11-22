@@ -1,6 +1,0 @@
-omnia_ipsum:
-    images:
-        default_provider: 'placeholder'
-    faker:
-        locale: '%kernel.default_locale%'
-

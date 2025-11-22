@@ -24,9 +24,9 @@ final class VideoRuntimeTest extends TestCase
         $this->runtime = new VideoRuntime($videoManager);
     }
 
-    public function testPlaceholderVideo(): void
+    public function testOmniaVideo(): void
     {
-        $url = $this->runtime->placeholderVideo(1920, 1080);
+        $url = $this->runtime->omniaVideo(1920, 1080);
 
         $this->assertIsString($url);
         $this->assertStringContainsString('https://', $url);

@@ -4,14 +4,22 @@ Complete reference for using Faker to generate realistic fake data.
 
 ## Overview
 
-Omnia Ipsum integrates [FakerPHP](https://fakerphp.github.io/) for generating realistic fake data. Use the `fake()` function in Twig templates.
+Omnia Ipsum integrates [FakerPHP](https://fakerphp.github.io/) for generating realistic fake data. Two main functions:
 
-## Basic Usage
+1. **`fake(formatter, arguments)`** - Access 100+ Faker formatters
+2. **`fake_text(maxChars)`** - Generate realistic text content (alternative to Lorem Ipsum)
+
+## Quick Start
 
 ```twig
-{{ fake('name') }}
-{{ fake('email') }}
-{{ fake('phoneNumber') }}
+{# Fake data #}
+{{ fake('name') }}           {# John Doe #}
+{{ fake('email') }}          {# john@example.com #}
+{{ fake('phoneNumber') }}    {# (123) 456-7890 #}
+
+{# Realistic text (instead of Lorem Ipsum) #}
+{{ fake_text(200) }}         {# Real-looking English text #}
+{{ fake_text(400) }}         {# Longer realistic text #}
 ```
 
 ## Common Formatters
@@ -286,7 +294,7 @@ omnia_ipsum:
 ```twig
 <div class="profile-card">
     {% set name = fake('name') %}
-    <img src="{{ placeholder_avatar(name, 100) }}" alt="{{ name }}">
+    <img src="{{ omnia_avatar(name, 100) }}" alt="{{ name }}">
     <h3>{{ name }}</h3>
     <p>{{ fake('jobTitle') }}</p>
     <p>{{ fake('company') }}</p>
@@ -304,7 +312,7 @@ omnia_ipsum:
 <div class="products">
     {% for i in 1..12 %}
         <div class="product">
-            <img src="{{ placeholder_image(300, 300, {provider: 'picsum'}) }}" alt="Product">
+            <img src="{{ omnia_image(300, 300, {provider: 'picsum'}) }}" alt="Product">
             <h4>{{ lorem_title() }}</h4>
             <p>{{ lorem_sentence() }}</p>
             <p class="price">{{ fake('randomFloat', [2, 10, 1000]) }} €</p>
@@ -319,12 +327,12 @@ omnia_ipsum:
 ```twig
 <article>
     {% set author = fake('name') %}
-    <img src="{{ placeholder_image(1200, 400, {provider: 'picsum'}) }}" class="hero">
+    <img src="{{ omnia_image(1200, 400, {provider: 'picsum'}) }}" class="hero">
     
     <h1>{{ lorem_title() }}</h1>
     
     <div class="meta">
-        <img src="{{ placeholder_avatar(author, 40) }}" alt="{{ author }}">
+        <img src="{{ omnia_avatar(author, 40) }}" alt="{{ author }}">
         <span>By {{ author }}</span>
         <time>{{ fake('dateTimeBetween', ['-30 days', 'now'])|date('F j, Y') }}</time>
     </div>
@@ -356,9 +364,56 @@ omnia_ipsum:
 </form>
 ```
 
+## Realistic Text Generation
+
+### `fake_text(maxChars)`
+
+Generate realistic-looking English text using Faker's `realText()` method. Perfect alternative to Lorem Ipsum for client demos!
+
+```twig
+{# Short text (200 chars default) #}
+<p>{{ fake_text() }}</p>
+
+{# Medium text (400 chars) #}
+<p>{{ fake_text(400) }}</p>
+
+{# Long text (800 chars) #}
+<div class="article">
+    {{ fake_text(800) }}
+</div>
+```
+
+**Parameters:**
+- `maxChars` (int): Maximum characters (default: 200)
+
+**Returns:** Realistic English text from books and articles
+
+### Lorem Ipsum vs Fake Text
+
+| Feature | Lorem Ipsum | fake_text() |
+|---------|-------------|-------------|
+| **Appearance** | Latin gibberish | Real English |
+| **Use Case** | Layout testing | Client demos |
+| **Performance** | Very fast | Slightly slower |
+| **Best For** | Wireframes | Realistic prototypes |
+
+### Example: Blog with Realistic Text
+
+```twig
+<article>
+    <h1>{{ lorem_title() }}</h1>
+    <p class="lead">{{ fake_text(150) }}</p>
+    
+    {{ fake_text(400) }}
+    
+    <h2>{{ lorem_title() }}</h2>
+    {{ fake_text(350) }}
+</article>
+```
+
 ## See Also
 
+- [Text Generation](text.md) - Lorem Ipsum functions
 - [FakerPHP Documentation](https://fakerphp.github.io/) - Complete formatter reference
-- [Usage Guide](usage.md) - More examples
 - [Configuration](configuration.md) - Set locale and seed
 

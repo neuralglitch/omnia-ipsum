@@ -21,14 +21,14 @@ final class OmniaIpsumExtension extends AbstractExtension
     {
         return [
             // Image functions
-            new TwigFunction('placeholder_image', [ImageRuntime::class, 'placeholderImage']),
-            new TwigFunction('placeholder_avatar', [ImageRuntime::class, 'placeholderAvatar']),
+            new TwigFunction('omnia_image', [ImageRuntime::class, 'omniaImage']),
+            new TwigFunction('omnia_avatar', [ImageRuntime::class, 'omniaAvatar']),
 
             // Video functions
-            new TwigFunction('placeholder_video', [VideoRuntime::class, 'placeholderVideo']),
+            new TwigFunction('omnia_video', [VideoRuntime::class, 'omniaVideo']),
 
             // Audio functions
-            new TwigFunction('placeholder_audio', [AudioRuntime::class, 'placeholderAudio']),
+            new TwigFunction('omnia_audio', [AudioRuntime::class, 'omniaAudio']),
 
             // Lorem Ipsum text functions
             new TwigFunction('lorem_paragraphs', [TextRuntime::class, 'loremParagraphs']),

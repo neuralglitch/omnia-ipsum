@@ -19,7 +19,7 @@ final class VideoRuntime implements RuntimeExtensionInterface
      *
      * @param array<string, mixed> $options
      */
-    public function placeholderVideo(int $width, int $height, array $options = []): string
+    public function omniaVideo(int $width, int $height, array $options = []): string
     {
         return $this->videoProviderManager->generate($width, $height, $options);
     }

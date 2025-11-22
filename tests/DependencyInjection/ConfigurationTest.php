@@ -45,6 +45,9 @@ final class ConfigurationTest extends TestCase
         $this->assertSame(1920, $config['videos']['default_width']);
         $this->assertSame(1080, $config['videos']['default_height']);
         $this->assertSame(30, $config['videos']['default_duration']);
+
+        $this->assertSame('soundhelix', $config['audios']['default_provider']);
+        $this->assertSame(10, $config['audios']['default_duration']);
     }
 
     public function testCustomImageConfiguration(): void

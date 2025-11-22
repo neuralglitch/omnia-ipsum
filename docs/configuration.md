@@ -9,7 +9,7 @@ Complete configuration reference for Omnia Ipsum.
 omnia_ipsum:
     # Image settings
     images:
-        default_provider: 'placeholder'  # Default image provider
+        default_provider: 'picsum'       # Default image provider
         default_width: 600               # Default width in pixels
         default_height: 400              # Default height in pixels
         default_background: 'cccccc'     # Default background color (hex, no #)
@@ -18,14 +18,14 @@ omnia_ipsum:
 
     # Video settings
     videos:
-        default_provider: 'loremipsum'   # Default video provider
+        default_provider: 'gcs'          # Default video provider (Google Cloud Storage)
         default_width: 1920              # Default width in pixels (1-3840)
         default_height: 1080             # Default height in pixels (1-2160)
         default_duration: 30             # Default duration in seconds (1-120)
 
     # Audio settings
     audios:
-        default_provider: 'silence'      # Default audio provider
+        default_provider: 'soundhelix'   # Default audio provider (soundhelix, silence)
         default_duration: 10             # Default duration in seconds (1-60)
 
     # Lorem Ipsum text settings
@@ -52,7 +52,7 @@ omnia_ipsum:
         default_provider: 'picsum'  # Use Picsum Photos by default
 ```
 
-**Available providers:** `placeholder`, `dummyimage`, `picsum`, `placekitten`, `placehold`, `placeholders`
+**Available providers:** `picsum` (default), `placeholder`, `dummyimage`, `placehold`, `ui-avatars`
 
 ### Default Dimensions
 
@@ -84,6 +84,54 @@ Set default text for placeholders:
 omnia_ipsum:
     images:
         default_text: 'Preview Image'  # Custom default text
+```
+
+## Audio Configuration
+
+### Default Provider
+
+Choose between music and silent audio:
+
+```yaml
+omnia_ipsum:
+    audios:
+        default_provider: 'soundhelix'  # Real music (default)
+        # OR
+        default_provider: 'silence'     # Silent audio
+```
+
+**Available providers:** `soundhelix` (music, default), `silence` (silent WAV)
+
+### Music Player Example
+
+```yaml
+omnia_ipsum:
+    audios:
+        default_provider: 'soundhelix'  # Use real music
+```
+
+```twig
+{# Uses SoundHelix by default #}
+<audio src="{{ omnia_audio(10) }}" controls></audio>
+
+{# Specific song #}
+<audio src="{{ omnia_audio(10, {song: 5}) }}" controls></audio>
+```
+
+### UI Testing Example
+
+```yaml
+omnia_ipsum:
+    audios:
+        default_provider: 'silence'  # Use silent audio for testing
+```
+
+```twig
+{# Uses Silence by default #}
+<audio src="{{ omnia_audio(10) }}" controls></audio>
+
+{# With custom sample rate #}
+<audio src="{{ omnia_audio(30, {sample_rate: 48000}) }}" controls></audio>
 ```
 
 ## Text Configuration
@@ -197,10 +245,10 @@ You can always override configuration in templates:
 
 ```twig
 {# Override default provider #}
-{{ placeholder_image(800, 600, {provider: 'placekitten'}) }}
+{{ omnia_image(800, 600, {provider: 'placeholder'}) }}
 
 {# Override default colors #}
-{{ placeholder_image(600, 400, {
+{{ omnia_image(600, 400, {
     background: 'ff0000',
     foreground: '000000'
 }) }}
@@ -230,7 +278,7 @@ return [
 
 ```twig
 {% if app.environment != 'prod' %}
-    <img src="{{ placeholder_image(600, 400) }}" alt="Placeholder">
+    <img src="{{ omnia_image(600, 400) }}" alt="Placeholder">
 {% else %}
     <img src="{{ real_image_path }}" alt="Real Image">
 {% endif %}
@@ -273,7 +321,7 @@ omnia_ipsum:
 
 ## See Also
 
-- [Usage Guide](usage.md) - How to use in templates
-- [Image Providers](providers.md) - Available providers
+- [Quick Reference](quickstart.md) - Quick examples
+- [Image Providers](images.md) - Available providers
 - [Faker Integration](faker.md) - Faker formatters
 

@@ -2,51 +2,127 @@
 
 Complete reference for placeholder audio generation.
 
-## Silence Provider
+## Provider Comparison
 
-The Silence provider generates silent audio files as data URLs (base64-encoded WAV files).
+| Provider | Type | File Size | Format | Best For |
+|----------|------|-----------|--------|----------|
+| `soundhelix` | Real music | ~5 MB/track | MP3 (direct URL) | Music players, podcast demos |
+| `silence` | Silent | ~1-5 KB | WAV (data URL) | Audio player testing, UI testing |
+
+## SoundHelix Provider (Default)
+
+**Provider:** `soundhelix`  
+**URL:** [https://www.soundhelix.com](https://www.soundhelix.com)
+
+Royalty-free generated music tracks. Perfect for music players, podcast demos, and media applications!
+
+### Features
+
+- **10 unique tracks** - Different algorithmically generated music
+- **Full-length songs** - ~5 minutes each
+- **Royalty-free** - Free to use, no licensing issues
+- **Electronic music** - Various styles and tempos
+- **Direct MP3 URLs** - No API keys required
+- **Reliable CDN** - Fast delivery
 
 ### Basic Usage
 
 ```twig
-{# Generate 10 seconds of silence #}
-<audio src="{{ placeholder_audio(10) }}" controls></audio>
+{# Default music (Song 1) #}
+<audio src="{{ omnia_audio(10) }}" controls></audio>
 
-{# Generate 30 seconds of silence #}
-<audio src="{{ placeholder_audio(30) }}" controls></audio>
+{# Specific song #}
+<audio src="{{ omnia_audio(10, {song: 5}) }}" controls></audio>
+
+{# Different songs in loop #}
+{% for i in 1..10 %}
+    <audio src="{{ omnia_audio(10, {song: i}) }}" controls></audio>
+{% endfor %}
 ```
 
-### Custom Sample Rate
+### Supported Options
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `song` | int | 1 | Song number (1-10) |
+| `provider` | string | `'soundhelix'` | Provider name |
+
+### All Available Songs
 
 ```twig
-{# 48kHz (professional quality) #}
-<audio src="{{ placeholder_audio(10, {
-    sample_rate: 48000
-}) }}" controls></audio>
+{# Song 1 (Default) #}
+{{ omnia_audio(10, {song: 1}) }}
 
-{# 44.1kHz (CD quality, default) #}
-<audio src="{{ placeholder_audio(10, {
-    sample_rate: 44100
-}) }}" controls></audio>
-
-{# 22.05kHz (low quality) #}
-<audio src="{{ placeholder_audio(10, {
-    sample_rate: 22050
-}) }}" controls></audio>
+{# Songs 2-10 #}
+{{ omnia_audio(10, {song: 2}) }}
+{{ omnia_audio(10, {song: 3}) }}
+{{ omnia_audio(10, {song: 4}) }}
+{{ omnia_audio(10, {song: 5}) }}
+{{ omnia_audio(10, {song: 6}) }}
+{{ omnia_audio(10, {song: 7}) }}
+{{ omnia_audio(10, {song: 8}) }}
+{{ omnia_audio(10, {song: 9}) }}
+{{ omnia_audio(10, {song: 10}) }}
 ```
 
-### Mono vs Stereo
+### Music Player Example
 
 ```twig
-{# Mono (1 channel) #}
-<audio src="{{ placeholder_audio(10, {
-    channels: 1
-}) }}" controls></audio>
+<div class="music-player">
+    <h2>Playlist</h2>
+    {% for song in 1..10 %}
+        <div class="track">
+            <h4>Track {{ song }}</h4>
+            <audio src="{{ omnia_audio(10, {song: song}) }}" 
+                   controls 
+                   preload="metadata"></audio>
+        </div>
+    {% endfor %}
+</div>
+```
 
-{# Stereo (2 channels, default) #}
-<audio src="{{ placeholder_audio(10, {
-    channels: 2
-}) }}" controls></audio>
+### Podcast Demo Example
+
+```twig
+<div class="podcast-episodes">
+    {% for i in 1..5 %}
+        {% set host = fake('name') %}
+        {% set song = (i - 1) % 10 + 1 %}
+        <div class="episode">
+            <img src="{{ omnia_avatar(host, 80) }}" alt="{{ host }}">
+            <h3>{{ lorem_title() }}</h3>
+            <p>Hosted by {{ host }}</p>
+            <audio src="{{ omnia_audio(10, {song: song}) }}" controls></audio>
+        </div>
+    {% endfor %}
+</div>
+```
+
+## Silence Provider
+
+**Provider:** `silence`
+
+Generates silent WAV audio as base64-encoded data URLs. Perfect for testing audio players without actual sound.
+
+### Features
+
+- **Instant playback** - No network request (data URL)
+- **Configurable duration** - 1-60 seconds
+- **Custom sample rate** - 22050, 44100, 48000 Hz
+- **Mono or stereo** - 1 or 2 channels
+- **Small file size** - ~1-5 KB
+
+### Basic Usage
+
+```twig
+{# Basic silent audio (10 seconds) #}
+<audio src="{{ omnia_audio(10, {provider: 'silence'}) }}" controls></audio>
+
+{# Custom duration #}
+<audio src="{{ omnia_audio(30, {provider: 'silence'}) }}" controls></audio>
+
+{# Short beep placeholder #}
+<audio src="{{ omnia_audio(1, {provider: 'silence'}) }}" controls></audio>
 ```
 
 ### Supported Options
@@ -54,313 +130,182 @@ The Silence provider generates silent audio files as data URLs (base64-encoded W
 | Option | Type | Default | Description |
 |--------|------|---------|-------------|
 | `sample_rate` | int | 44100 | Sample rate in Hz (22050, 44100, 48000) |
-| `channels` | int | 2 | Number of channels (1=mono, 2=stereo) |
+| `channels` | int | 2 | Number of channels (1 = mono, 2 = stereo) |
+| `provider` | string | `'soundhelix'` | Use `'silence'` for silent audio |
 
-## Technical Specifications
-
-### WAV Format
-
-The Silence provider generates valid WAV files:
-
-- **Format**: PCM (Pulse Code Modulation)
-- **Bit Depth**: 16-bit
-- **Encoding**: Linear PCM
-- **Container**: WAV (RIFF)
-- **Compression**: None (uncompressed)
-- **Data URL**: Base64-encoded
-
-### File Size Calculation
-
-File size depends on:
-- Duration (seconds)
-- Sample rate (Hz)
-- Channels (mono/stereo)
-
-**Formula:**
-```
-Size (bytes) = duration × sample_rate × channels × 2 + 44
-Size (base64) = Size (bytes) × 1.37 (approx)
-```
-
-**Examples:**
-
-| Duration | Sample Rate | Channels | File Size | Base64 Size |
-|----------|-------------|----------|-----------|-------------|
-| 1s | 44100 Hz | Mono | ~88 KB | ~121 KB |
-| 1s | 44100 Hz | Stereo | ~176 KB | ~241 KB |
-| 10s | 44100 Hz | Stereo | ~1.7 MB | ~2.3 MB |
-| 30s | 44100 Hz | Stereo | ~5.2 MB | ~7.1 MB |
-| 60s | 44100 Hz | Stereo | ~10.3 MB | ~14.1 MB |
-
-### Duration Limits
-
-The provider limits duration to prevent memory issues:
-
-- **Minimum**: 1 second
-- **Maximum**: 60 seconds
-
-Longer durations are automatically clamped to 60 seconds.
+### Advanced Examples
 
 ```twig
-{# This will generate 60s, not 120s #}
-{{ placeholder_audio(120) }}
+{# Low quality (smaller file) #}
+<audio src="{{ omnia_audio(10, {
+    provider: 'silence',
+    sample_rate: 22050,
+    channels: 1
+}) }}" controls></audio>
+
+{# CD quality stereo #}
+<audio src="{{ omnia_audio(30, {
+    provider: 'silence',
+    sample_rate: 44100,
+    channels: 2
+}) }}" controls></audio>
+
+{# Professional quality #}
+<audio src="{{ omnia_audio(60, {
+    provider: 'silence',
+    sample_rate: 48000,
+    channels: 2
+}) }}" controls></audio>
 ```
 
-## Use Cases
-
-### Audio Player Testing
+### Audio Player Testing Example
 
 ```twig
-<div class="audio-player">
-    <audio src="{{ placeholder_audio(30) }}" controls></audio>
-    <div class="controls">
-        <button class="play">Play</button>
-        <button class="pause">Pause</button>
-        <input type="range" class="volume" min="0" max="100" value="50">
-    </div>
-</div>
-```
-
-### Podcast Player
-
-```twig
-<div class="podcast">
-    {% for i in 1..5 %}
-        <div class="episode">
-            <img src="{{ placeholder_avatar(fake('name'), 100) }}" alt="Host">
-            <h3>{{ lorem_title() }}</h3>
-            <p>{{ fake('name') }} - {{ fake('dateTime')|date('F j, Y') }}</p>
-            <audio src="{{ placeholder_audio(45) }}" controls></audio>
-            <p>{{ lorem_sentence() }}</p>
-        </div>
-    {% endfor %}
-</div>
-```
-
-### Music Player
-
-```twig
-<div class="music-player">
-    <div class="playlist">
-        {% for i in 1..10 %}
-            <div class="track">
-                <span class="track-number">{{ i }}</span>
-                <span class="track-title">{{ lorem_title() }}</span>
-                <span class="track-artist">{{ fake('name') }}</span>
-                <audio src="{{ placeholder_audio(180) }}" data-track="{{ i }}"></audio>
-            </div>
-        {% endfor %}
-    </div>
-</div>
-```
-
-### Audio Recorder Interface
-
-```twig
-<div class="recorder">
-    <button class="record">🔴 Record</button>
-    <button class="stop">⏹ Stop</button>
+<div class="audio-player-test">
+    {# Very short #}
+    <audio src="{{ omnia_audio(1, {provider: 'silence'}) }}" controls></audio>
     
-    <div class="recordings">
-        {% for i in 1..5 %}
-            <div class="recording">
-                <span>Recording {{ i }}</span>
-                <audio src="{{ placeholder_audio(fake('numberBetween', [5, 30])) }}" controls></audio>
-                <button class="delete">Delete</button>
-            </div>
-        {% endfor %}
-    </div>
+    {# Medium #}
+    <audio src="{{ omnia_audio(30, {provider: 'silence'}) }}" controls></audio>
+    
+    {# Long #}
+    <audio src="{{ omnia_audio(60, {provider: 'silence'}) }}" controls></audio>
 </div>
 ```
 
-## Performance Considerations
+## Choosing the Right Provider
 
-### Data URL Size
+### Use `soundhelix` (default) when:
+- ✅ Building music players
+- ✅ Creating podcast demos
+- ✅ Testing media applications
+- ✅ Client demonstrations
+- ✅ Want real audio content
+- ✅ Need different tracks for variety
 
-Data URLs are embedded directly in HTML:
+### Use `silence` when:
+- ✅ Testing audio player UI
+- ✅ Testing audio controls
+- ✅ Testing audio events
+- ✅ Don't need actual sound
+- ✅ Need instant loading (data URLs)
+- ✅ Want smallest possible file size
 
-```html
-<!-- This embeds ~2.3MB of base64 data in your HTML! -->
-<audio src="data:audio/wav;base64,UklGR...very long base64..."></audio>
-```
+## Technical Details
 
-**Impact:**
-- Increases HTML page size
-- Slower initial page load
-- No browser caching
-- No CDN benefits
+### SoundHelix
 
-**Recommendations:**
+- **Format:** MP3
+- **Delivery:** Direct URL (CDN)
+- **File Size:** ~5 MB per track
+- **Duration:** ~5 minutes per track
+- **Sample Rate:** 44.1 kHz
+- **Bitrate:** ~128 kbps
+- **Channels:** Stereo (2)
 
-✅ **Use for:**
-- Quick prototypes
-- Testing audio players
-- Short durations (1-10s)
-- Development only
+### Silence
 
-❌ **Avoid for:**
-- Production sites
-- Long durations (>30s)
-- Multiple audio files
-- Mobile devices
+- **Format:** WAV (PCM)
+- **Delivery:** Base64 data URL
+- **File Size:** ~1-5 KB (depends on duration)
+- **Duration:** Configurable (1-60 seconds)
+- **Sample Rates:** 22050, 44100, 48000 Hz
+- **Channels:** Mono (1) or Stereo (2)
+- **Bit Depth:** 16-bit
 
-### Alternative for Production
+## Complete Example
 
-For production prototypes, consider:
-
-1. **Use real audio files** (smaller file size)
-2. **Use external services** (Soundcloud, etc.)
-3. **Generate once, save as file** (instead of inline data URL)
-
-## Browser Compatibility
-
-### Data URLs
-
-✅ **Supported:**
-- Chrome/Edge
-- Firefox
-- Safari
-- Opera
-
-**Limitations:**
-- Some browsers limit data URL size
-- Mobile browsers may have stricter limits
-- Older browsers may not support WAV
-
-### Audio Element
-
-The HTML5 `<audio>` element is supported in all modern browsers.
-
-## Advanced Usage
-
-### Programmatic Access
-
-```php
-use NeuralGlitch\OmniaIpsum\Service\AudioProviderManager;
-
-$audioManager = $container->get(AudioProviderManager::class);
-
-// Generate audio data URL
-$dataUrl = $audioManager->generate(10, [
-    'sample_rate' => 48000,
-    'channels' => 2,
-]);
-
-// Use in response
-return new Response('<audio src="' . $dataUrl . '" controls></audio>');
-```
-
-### Custom Provider
-
-Create your own audio provider:
-
-```php
-<?php
-
-declare(strict_types=1);
-
-namespace App\Provider;
-
-use NeuralGlitch\OmniaIpsum\Provider\AudioProviderInterface;
-
-final class ToneGeneratorProvider implements AudioProviderInterface
-{
-    public function generate(int $duration, array $options = []): string
-    {
-        $frequency = $options['frequency'] ?? 440; // A4 note
+```twig
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Music Player Demo</title>
+</head>
+<body>
+    <div class="player">
+        <h1>Now Playing</h1>
         
-        // Generate tone (simplified example)
-        return 'data:audio/wav;base64,' . base64_encode($this->generateTone($duration, $frequency));
-    }
-
-    public function getName(): string
-    {
-        return 'tone';
-    }
-
-    public function supportsOption(string $option): bool
-    {
-        return $option === 'frequency';
-    }
+        {# Main player with SoundHelix music #}
+        <audio id="main-player" 
+               src="{{ omnia_audio(10, {song: 1}) }}" 
+               controls 
+               autoplay></audio>
+        
+        <h2>Playlist</h2>
+        <ul>
+            {% for song in 1..10 %}
+                <li>
+                    <a href="#" onclick="document.getElementById('main-player').src='{{ omnia_audio(10, {song: song}) }}'; return false;">
+                        Track {{ song }}
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
     
-    private function generateTone(int $duration, int $frequency): string
-    {
-        // Implementation for tone generation
-        // ...
-    }
-}
+    {# Silent audio for testing #}
+    <div class="test-controls">
+        <h2>Test Audio Controls</h2>
+        <audio src="{{ omnia_audio(5, {provider: 'silence'}) }}" controls></audio>
+    </div>
+</body>
+</html>
 ```
 
-Register in services:
+## Configuration
+
+### Set Default Provider
 
 ```yaml
-services:
-    App\Provider\ToneGeneratorProvider:
-        tags:
-            - { name: 'omnia_ipsum.audio_provider' }
+# config/packages/omnia_ipsum.yaml
+omnia_ipsum:
+    audios:
+        default_provider: 'soundhelix'  # Use music by default
+        default_duration: 10
 ```
 
-## Troubleshooting
+### Use in Templates
 
-### Audio Not Playing
+```twig
+{# Uses default provider (soundhelix) #}
+<audio src="{{ omnia_audio(10) }}" controls></audio>
 
-**Problem:**
-Audio element doesn't play.
+{# Explicit soundhelix #}
+<audio src="{{ omnia_audio(10, {provider: 'soundhelix', song: 3}) }}" controls></audio>
 
-**Solution:**
-1. Check browser console for errors
-2. Verify data URL is complete
-3. Try shorter duration
-4. Check browser compatibility
-
-### Audio Too Large
-
-**Problem:**
-Page loads very slowly or crashes.
-
-**Solution:**
-1. Reduce duration:
-   ```twig
-   {# ❌ Too long #}
-   {{ placeholder_audio(300) }}  {# 5 minutes! #}
-   
-   {# ✅ Reasonable #}
-   {{ placeholder_audio(10) }}
-   ```
-
-2. Reduce sample rate:
-   ```twig
-   {# ✅ Smaller file #}
-   {{ placeholder_audio(30, {sample_rate: 22050}) }}
-   ```
-
-3. Use mono instead of stereo:
-   ```twig
-   {# ✅ Half the size #}
-   {{ placeholder_audio(30, {channels: 1}) }}
-   ```
-
-### Memory Issues
-
-**Problem:**
-```
-Allowed memory size exhausted
+{# Explicit silence #}
+<audio src="{{ omnia_audio(10, {provider: 'silence'}) }}" controls></audio>
 ```
 
-**Solution:**
-The provider limits duration to 60 seconds to prevent this. If you still hit memory limits:
+## Performance
 
-1. Reduce duration further (max 30s)
-2. Use lower sample rate (22050 Hz)
-3. Use mono (1 channel)
-4. Increase PHP memory limit (temporary):
-   ```ini
-   memory_limit = 512M
-   ```
+### SoundHelix
+- ✅ CDN-delivered MP3 files
+- ✅ ~5 MB per track
+- ✅ Streams well (progressive download)
+- ⚠️ Full-length songs (consider using `preload="metadata"`)
+
+### Silence
+- ✅ Instant loading (data URL)
+- ✅ Very small (~1-5 KB)
+- ✅ No network request
+- ✅ Perfect for UI testing
+
+### Recommendations
+
+```twig
+{# For music demos: Use SoundHelix with metadata preload #}
+<audio src="{{ omnia_audio(10, {song: 1}) }}" 
+       controls 
+       preload="metadata"></audio>
+
+{# For UI testing: Use silence #}
+<audio src="{{ omnia_audio(10, {provider: 'silence'}) }}" 
+       controls></audio>
+```
 
 ## See Also
 
-- [Usage Guide](usage.md) - How to use audio in templates
-- [Configuration](configuration.md) - Set default audio settings
-- [Video Providers](videos.md) - Placeholder videos
-
+- [Quick Reference](quickstart.md) - Quick examples
+- [Configuration](configuration.md) - Configure audio settings
+- [SoundHelix](https://www.soundhelix.com/) - Official SoundHelix website

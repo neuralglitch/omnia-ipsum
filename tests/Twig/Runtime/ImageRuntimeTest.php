@@ -24,17 +24,17 @@ final class ImageRuntimeTest extends TestCase
         $this->runtime = new ImageRuntime($imageManager);
     }
 
-    public function testPlaceholderImage(): void
+    public function testOmniaImage(): void
     {
-        $url = $this->runtime->placeholderImage(600, 400);
+        $url = $this->runtime->omniaImage(600, 400);
 
         $this->assertIsString($url);
         $this->assertStringContainsString('https://', $url);
     }
 
-    public function testPlaceholderAvatar(): void
+    public function testOmniaAvatar(): void
     {
-        $url = $this->runtime->placeholderAvatar('John Doe', 100);
+        $url = $this->runtime->omniaAvatar('John Doe', 100);
 
         $this->assertIsString($url);
         $this->assertStringContainsString('https://ui-avatars.com', $url);

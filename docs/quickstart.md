@@ -13,15 +13,15 @@ Bundle is auto-registered via Symfony Flex.
 ## All Functions at a Glance
 
 ```twig
-{# Images (6+ providers) #}
-{{ placeholder_image(width, height, options) }}
-{{ placeholder_avatar(name, size, options) }}
+{# Images (5 providers) #}
+{{ omnia_image(width, height, options) }}
+{{ omnia_avatar(name, size, options) }}
 
-{# Videos (LoremIpsum.video) #}
-{{ placeholder_video(width, height, options) }}
+{# Videos (Google Cloud Storage) #}
+{{ omnia_video(width, height, options) }}
 
-{# Audio (Silent WAV) #}
-{{ placeholder_audio(duration, options) }}
+{# Audio (Music + Silent) #}
+{{ omnia_audio(duration, options) }}  {# Default: SoundHelix music #}
 
 {# Lorem Ipsum Text #}
 {{ lorem_paragraphs(count) }}
@@ -33,6 +33,7 @@ Bundle is auto-registered via Symfony Flex.
 
 {# Faker (Realistic Data) #}
 {{ fake(formatter, arguments) }}
+{{ fake_text(maxChars) }}  {# Realistic text #}
 ```
 
 ## Common Examples
@@ -41,7 +42,7 @@ Bundle is auto-registered via Symfony Flex.
 
 ```twig
 <section class="hero">
-    <video src="{{ placeholder_video(1920, 1080, {clip: 'powerpoint-1'}) }}" 
+    <video src="{{ omnia_video(1920, 1080, {video: 'big-buck-bunny'}) }}" 
            autoplay muted loop class="hero-video"></video>
     <div class="hero-content">
         <h1>{{ lorem_title() }}</h1>
@@ -56,7 +57,7 @@ Bundle is auto-registered via Symfony Flex.
 <div class="product-grid">
     {% for i in 1..12 %}
         <div class="product-card">
-            <img src="{{ placeholder_image(300, 300, {provider: 'picsum'}) }}" alt="Product">
+            <img src="{{ omnia_image(300, 300, {provider: 'picsum', seed: i}) }}" alt="Product">
             <h3>{{ lorem_title() }}</h3>
             <p>{{ lorem_sentence() }}</p>
             <p class="price">{{ fake('randomFloat', [2, 10, 1000]) }} €</p>
@@ -72,7 +73,7 @@ Bundle is auto-registered via Symfony Flex.
     {% for i in 1..6 %}
         {% set name = fake('name') %}
         <div class="team-member">
-            <img src="{{ placeholder_avatar(name, 120) }}" alt="{{ name }}">
+            <img src="{{ omnia_avatar(name, 120) }}" alt="{{ name }}">
             <h4>{{ name }}</h4>
             <p>{{ fake('jobTitle') }}</p>
             <p>{{ fake('email') }}</p>
@@ -85,11 +86,11 @@ Bundle is auto-registered via Symfony Flex.
 
 ```twig
 <article>
-    <img src="{{ placeholder_image(1200, 400, {provider: 'picsum'}) }}" class="featured">
+    <img src="{{ omnia_image(1200, 400, {provider: 'picsum'}) }}" class="featured">
     <h1>{{ lorem_title() }}</h1>
     <div class="meta">
         {% set author = fake('name') %}
-        <img src="{{ placeholder_avatar(author, 40) }}" alt="{{ author }}">
+        <img src="{{ omnia_avatar(author, 40) }}" alt="{{ author }}">
         <span>{{ author }}</span>
         <time>{{ fake('dateTimeBetween', ['-30 days', 'now'])|date('F j, Y') }}</time>
     </div>
@@ -103,19 +104,20 @@ Bundle is auto-registered via Symfony Flex.
 <div class="gallery">
     {# Images #}
     {% for i in 1..6 %}
-        <img src="{{ placeholder_image(400, 300, {provider: 'picsum'}) }}">
+        <img src="{{ omnia_image(400, 300, {provider: 'picsum', seed: i}) }}">
     {% endfor %}
     
     {# Videos #}
-    {% for i in 1..3 %}
-        <video src="{{ placeholder_video(800, 600, {duration: 15}) }}" controls></video>
+    {% set videos = ['big-buck-bunny', 'sintel', 'elephants-dream'] %}
+    {% for video in videos %}
+        <video src="{{ omnia_video(1920, 1080, {video: video}) }}" controls></video>
     {% endfor %}
     
-    {# Audio #}
+    {# Audio - Music #}
     {% for i in 1..3 %}
         <div class="audio-item">
             <h4>{{ lorem_title() }}</h4>
-            <audio src="{{ placeholder_audio(30) }}" controls></audio>
+            <audio src="{{ omnia_audio(10, {song: i}) }}" controls></audio>
         </div>
     {% endfor %}
 </div>
@@ -125,39 +127,39 @@ Bundle is auto-registered via Symfony Flex.
 
 ```twig
 {# Picsum - Real photos #}
-{{ placeholder_image(800, 600, {provider: 'picsum'}) }}
+{{ omnia_image(800, 600, {provider: 'picsum'}) }}
 
 {# Picsum - Grayscale or blurred #}
-{{ placeholder_image(800, 600, {provider: 'picsum', grayscale: true}) }}
-{{ placeholder_image(800, 600, {provider: 'picsum', blur: 5}) }}
+{{ omnia_image(800, 600, {provider: 'picsum', grayscale: true}) }}
+{{ omnia_image(800, 600, {provider: 'picsum', blur: 5}) }}
 
 {# Placeholder.com - Colored boxes (default) #}
-{{ placeholder_image(600, 400, {background: 'ff0000', text: 'Sale!'}) }}
+{{ omnia_image(600, 400, {background: 'ff0000', text: 'Sale!'}) }}
 
 {# DummyImage - Multiple formats #}
-{{ placeholder_image(800, 600, {provider: 'dummyimage', format: 'jpg'}) }}
+{{ omnia_image(800, 600, {provider: 'dummyimage', format: 'jpg'}) }}
 
 {# UI Avatars - User avatars #}
-{{ placeholder_avatar('John Doe', 100) }}
+{{ omnia_avatar('John Doe', 100) }}
 ```
 
 **See [Image Providers](images.md) for all 5 providers.**
 
-## Video Clips
+## Videos
 
 ```twig
-{# Pre-built clips (CFR, professional quality) #}
-{{ placeholder_video(1920, 1080, {clip: 'powerpoint-1'}) }}
-{{ placeholder_video(1920, 1080, {clip: 'keynote-2'}) }}
-{{ placeholder_video(1920, 1080, {clip: 'vt-3'}) }}
+{# Default video (Big Buck Bunny) #}
+{{ omnia_video(1920, 1080) }}
 
-{# Custom videos #}
-{{ placeholder_video(1280, 720, {duration: 30, name: 'Demo'}) }}
+{# Specific videos #}
+{{ omnia_video(1920, 1080, {video: 'sintel'}) }}
+{{ omnia_video(1920, 1080, {video: 'elephants-dream'}) }}
+{{ omnia_video(1920, 1080, {video: 'tears-of-steel'}) }}
 ```
 
-**12 clips available:** powerpoint-1 to 4, keynote-1 to 4, vt-1 to 4
+**13 videos available** from Google Cloud Storage (reliable & fast!)
 
-**See [Video Providers](videos.md) for details.**
+**See [Video Providers](videos.md) for all videos.**
 
 ## Faker Formatters
 
@@ -219,16 +221,18 @@ omnia_ipsum:
 
 - Use in development/testing only
 - Disable in production (`['dev' => true, 'test' => true]`)
-- Choose appropriate providers (Picsum for photos, PlaceKitten for fun)
-- Use pre-built video clips for better performance
-- Keep audio duration short (<30s)
+- Choose appropriate providers (Picsum for photos, UI-Avatars for people)
+- Use `seed` parameter for different images in loops
+- Use `fake_text()` for realistic content in client demos
+- Use SoundHelix for music/podcast demos, Silence for UI testing
+- Configure `soundhelix` as default for media demos
 
 ### ❌ DON'T
 
 - Don't use in production
-- Don't generate long audio (>60s causes memory issues)
-- Don't rely on data URLs for large files
+- Don't use Silence provider for long durations (>60s causes memory issues)
 - Don't use Faker for passwords/tokens
+- Don't expect custom durations with SoundHelix (all songs are ~5 min)
 
 ## Next Steps
 
@@ -236,10 +240,4 @@ omnia_ipsum:
 - **[Video Providers](videos.md)** - Video options and clips
 - **[Faker Integration](faker.md)** - All available fake data formatters
 - **[Configuration](configuration.md)** - Customize defaults
-
-## See Also
-
-- [CHANGELOG.md](../CHANGELOG.md) - Version history
-- [CONTRIBUTING.md](../CONTRIBUTING.md) - How to contribute
-- [GitHub Issues](https://github.com/neuralglitch/omnia-ipsum/issues) - Bug reports
 
