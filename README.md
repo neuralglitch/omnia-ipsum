@@ -7,76 +7,51 @@
 [![PHP Version](https://img.shields.io/badge/PHP-8.1+-777BB4?style=flat&logo=php&logoColor=white)](composer.json)
 [![Symfony](https://img.shields.io/badge/Symfony-6.4+-343434?style=flat&logo=symfony&logoColor=white)](composer.json)
 <br/>
-[![PHPUnit](https://github.com/neuralglitch/omnia-ipsum/actions/workflows/phpunit.yml/badge.svg)](https://github.com/neuralglitch/omnia-ipsum/actions/workflows/phpunit.yml)
-[![Coverage](https://github.com/neuralglitch/omnia-ipsum/actions/workflows/coverage.yml/badge.svg)](https://github.com/neuralglitch/omnia-ipsum/actions/workflows/coverage.yml)
-[![PHPStan](https://github.com/neuralglitch/omnia-ipsum/actions/workflows/phpstan.yml/badge.svg)](https://github.com/neuralglitch/omnia-ipsum/actions/workflows/phpstan.yml)
-<br/>
-[![Psalm](https://github.com/neuralglitch/omnia-ipsum/actions/workflows/psalm.yml/badge.svg)](https://github.com/neuralglitch/omnia-ipsum/actions/workflows/psalm.yml)
-[![Infection](https://github.com/neuralglitch/omnia-ipsum/actions/workflows/infection.yml/badge.svg)](https://github.com/neuralglitch/omnia-ipsum/actions/workflows/infection.yml)
-[![Code Style](https://github.com/neuralglitch/omnia-ipsum/actions/workflows/php-cs-fixer.yml/badge.svg)](https://github.com/neuralglitch/omnia-ipsum/actions/workflows/php-cs-fixer.yml)
-<br/>
-[![Release](https://img.shields.io/packagist/v/neuralglitch/omnia-ipsum.svg?style=flat&logo=packagist&logoColor=white)](https://packagist.org/packages/neuralglitch/omnia-ipsum)
-[![Downloads](https://img.shields.io/packagist/dt/neuralglitch/omnia-ipsum.svg?style=flat&logo=packagist&logoColor=white)](https://packagist.org/packages/neuralglitch/omnia-ipsum)
+[![Packagist](https://img.shields.io/badge/Packagist-abandoned-red?style=flat&logo=packagist&logoColor=white)](https://packagist.org/packages/neuralglitch/omnia-ipsum)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat)](LICENSE)
 
 </div>
 
+> **Abandoned and archived.** `neuralglitch/omnia-ipsum` is **abandoned** on [Packagist](https://packagist.org/packages/neuralglitch/omnia-ipsum) (replacement: [`symfinity/omnia-ipsum`](https://packagist.org/packages/symfinity/omnia-ipsum)). This [GitHub repository](https://github.com/neuralglitch/omnia-ipsum) is **read-only / archived**. New installs, issues, and releases: **[symfinity/omnia-ipsum](https://github.com/symfinity/omnia-ipsum)** (source of truth: [symfinity/symfinity](https://github.com/symfinity/symfinity) `packages/omnia-ipsum/`).
+>
+> **Migration:** [docs/migration.md](docs/migration.md) — Composer, namespace, Flex recipe, and bundle class changes.
+
 ## Features
 
-- **Placeholder Images** - 5 providers with real photos and colored placeholders
-- **Avatar Generation** - Automatic initials and colors
-- **Placeholder Videos** - Professional video clips
-- **Placeholder Audio** - Music tracks and silent audio
-- **Lorem Ipsum Text** - Classic placeholder text generation
-- **Fake Data** - FakerPHP integration for realistic content
-- **Twig Functions** - Simple, intuitive template functions
+- **Placeholder Images** — 5 providers with real photos and colored placeholders
+- **Avatar Generation** — Automatic initials and colors
+- **Placeholder Videos** — Professional video clips
+- **Placeholder Audio** — Music tracks and silent audio
+- **Lorem Ipsum Text** — Classic placeholder text generation
+- **Fake Data** — FakerPHP integration for realistic content
+- **Twig Functions** — Simple, intuitive template functions
 
-## Prerequisites
+## New projects
 
-For fully automatic setup, visit the [related Flex recipe repository](https://github.com/neuralglitch/symfony-recipes) and follow the instructions to add it to the 
-composer.json in the consuming project, as the recipe is not yet part of the Symfony's main recipe repository.
-
-## Installation
+Do **not** install this package. Use:
 
 ```bash
-composer require neuralglitch/omnia-ipsum
+composer require symfinity/omnia-ipsum
 ```
 
-## Quick Start
+Add the [symfinity/recipes](https://github.com/symfinity/recipes) Flex endpoint first — see [successor installation guide](https://github.com/symfinity/omnia-ipsum/blob/main/docs/installation.md).
 
-```twig
-{# Images #}
-<img src="{{ omnia_image(600, 400) }}" alt="Placeholder">
-<img src="{{ omnia_avatar('John Doe', 100) }}" alt="Avatar">
+The Flex recipe registers the bundle for **dev** and **test** only. **Do not enable in production.**
 
-{# Videos #}
-<video src="{{ omnia_video(1920, 1080) }}" controls></video>
+## Documentation (legacy tree)
 
-{# Audio #}
-<audio src="{{ omnia_audio(10) }}" controls></audio>
+Historical docs for the last `neuralglitch/*` release. For current Symfinity docs, use the [successor handbook](https://github.com/symfinity/omnia-ipsum/tree/main/docs).
 
-{# Text #}
-<h1>{{ lorem_title() }}</h1>
-<p>{{ lorem_paragraphs(3) }}</p>
+- **[Migration from neuralglitch/omnia-ipsum](docs/migration.md)** — upgrade to `symfinity/omnia-ipsum`
+- **[Quick Reference](docs/quickstart.md)** — Get started in 5 minutes (legacy)
+- **[Image Providers](docs/images.md)** — All image providers and options
+- **[Video Providers](docs/videos.md)** — Video options and clips
+- **[Audio Providers](docs/audios.md)** — Audio providers and tracks
+- **[Text Generation](docs/text.md)** — Lorem Ipsum and Faker integration
+- **[Faker Integration](docs/faker.md)** — All available fake data formatters
+- **[Configuration](docs/configuration.md)** — Configuration options
 
-{# Fake Data #}
-<p>{{ fake('name') }} - {{ fake('email') }}</p>
-<p>{{ fake_text(200) }}</p>
-```
-
-**Important:** Disable in production by configuring the bundle only for `dev` and `test` environments.
-
-## Documentation
-
-- **[Quick Reference](docs/quickstart.md)** - Get started in 5 minutes
-- **[Image Providers](docs/images.md)** - All image providers and options
-- **[Video Providers](docs/videos.md)** - Video options and clips
-- **[Audio Providers](docs/audios.md)** - Audio providers and tracks
-- **[Text Generation](docs/text.md)** - Lorem Ipsum and Faker integration
-- **[Faker Integration](docs/faker.md)** - All available fake data formatters
-- **[Configuration](docs/configuration.md)** - Configuration options
-
-## Requirements
+## Requirements (last legacy release)
 
 - PHP 8.1 or higher
 - Symfony 6.4, 7.x, or 8.x
@@ -84,9 +59,8 @@ composer require neuralglitch/omnia-ipsum
 
 ## Support
 
-- [GitHub Issues](https://github.com/neuralglitch/omnia-ipsum/issues)
-- [Security](.github/SECURITY.md)
-- [Contributing](CONTRIBUTING.md)
+- **Issues / security:** [symfinity/omnia-ipsum](https://github.com/symfinity/omnia-ipsum/issues) — not this archived repo
+- [Contributing](CONTRIBUTING.md) — historical; contributions go to symfinity/symfinity
 
 ## License
 
