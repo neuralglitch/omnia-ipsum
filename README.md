@@ -12,9 +12,17 @@
 
 </div>
 
-> **Abandoned and archived.** `neuralglitch/omnia-ipsum` is **abandoned** on [Packagist](https://packagist.org/packages/neuralglitch/omnia-ipsum) (replacement: [`symfinity/omnia-ipsum`](https://packagist.org/packages/symfinity/omnia-ipsum)). This [GitHub repository](https://github.com/neuralglitch/omnia-ipsum) is **read-only / archived**. New installs, issues, and releases: **[symfinity/omnia-ipsum](https://github.com/symfinity/omnia-ipsum)** (source of truth: [symfinity/symfinity](https://github.com/symfinity/symfinity) `packages/omnia-ipsum/`).
+> [!WARNING]
 >
-> **Migration:** [docs/migration.md](docs/migration.md) — Composer, namespace, Flex recipe, and bundle class changes.
+> `neuralglitch/omnia-ipsum` is
+>
+> - **abandoned** on [Packagist](https://packagist.org/packages/neuralglitch/omnia-ipsum)
+> - **read-only / archived** on [GitHub](https://github.com/neuralglitch/omnia-ipsum)
+>
+> Replacement: `symfinity/omnia-ipsum`
+>
+> - New installs, issues, and releases: [symfinity/omnia-ipsum](https://github.com/symfinity/omnia-ipsum)
+> - Migration: [docs/migration.md](docs/migration.md)
 
 ## Features
 
@@ -40,7 +48,7 @@ The Flex recipe registers the bundle for **dev** and **test** only. **Do not ena
 
 ## Documentation (legacy tree)
 
-Historical docs for the last `neuralglitch/*` release. For current Symfinity docs, use the [successor handbook](https://github.com/symfinity/omnia-ipsum/tree/main/docs).
+Historical docs for the last `neuralglitch/`* release. For current Symfinity docs, use the [successor handbook](https://github.com/symfinity/omnia-ipsum/tree/main/docs).
 
 - **[Migration from neuralglitch/omnia-ipsum](docs/migration.md)** — upgrade to `symfinity/omnia-ipsum`
 - **[Quick Reference](docs/quickstart.md)** — Get started in 5 minutes (legacy)
